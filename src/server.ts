@@ -1,5 +1,7 @@
 // Dependencies
 import fastify from "fastify";
+
+// Database
 import { database } from "./database.js";
 
 const app = fastify();
