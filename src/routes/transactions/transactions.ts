@@ -42,4 +42,12 @@ export const transactionsRoutes = async (app: FastifyInstance) => {
 
         return response.status(201).send();
     });
+
+    app.get("/summary", async () => {
+        const summary = await database("transactions")
+            .sum("amount", { as: "amount" })
+            .first();
+
+        return { summary };
+    });
 };
