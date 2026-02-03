@@ -1,8 +1,25 @@
 // Dependencies
-import { expect, test } from "vitest";
+import { expect, test, beforeAll, afterAll } from "vitest";
+import request from "supertest";
 
-test("Testing if user can create a transaction", () => {
-    const responseStatusCode = 201;
+// App
+import { app } from "../src/app";
 
-    expect(responseStatusCode).toEqual(201);
+beforeAll(async () => {
+    await app.ready();
+});
+
+afterAll(async () => {
+    await app.close();
+});
+
+test("User can create a new transaction", async () => {
+    await request(app.server)
+        .post("/transactions")
+        .send({
+            title: "New Transaction",
+            amount: 5000,
+            type: "credit",
+        })
+        .expect(201);
 });
