@@ -1,6 +1,6 @@
 // Dependencies
 import { FastifyInstance } from "fastify";
-import crypto, { randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 
 // Schema
 import {
@@ -67,7 +67,7 @@ export const transactionsRoutes = async (app: FastifyInstance) => {
         }
 
         await database("transactions").insert({
-            id: crypto.randomUUID(),
+            id: randomUUID(),
             title,
             amount: type === "credit" ? amount : amount * -1,
             session_id: sessionId,

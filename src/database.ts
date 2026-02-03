@@ -1,5 +1,4 @@
 // Dependencies
-import "dotenv/config";
 import knex from "knex";
 
 // Types
