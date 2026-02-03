@@ -46,7 +46,7 @@ export const transactionsRoutes = async (app: FastifyInstance) => {
                 .where({ id, session_id: sessionId })
                 .first();
 
-            return transaction;
+            return { transaction };
         },
     );
 
