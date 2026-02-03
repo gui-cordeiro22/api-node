@@ -1,5 +1,7 @@
 // Dependencies
 import knex from "knex";
+
+// Types
 import { Knex } from "knex";
 
 export const databaseConfig: Knex.Config = {
