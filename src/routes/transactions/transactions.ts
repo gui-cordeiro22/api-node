@@ -1,6 +1,6 @@
 // Dependencies
 import { FastifyInstance } from "fastify";
-import crypto from "node:crypto";
+import crypto, { randomUUID } from "node:crypto";
 
 // Schema
 import {
@@ -34,10 +34,22 @@ export const transactionsRoutes = async (app: FastifyInstance) => {
             request.body,
         );
 
+        let sessionId = request.cookies.sessionId;
+
+        if (!sessionId) {
+            sessionId = randomUUID();
+
+            response.cookie("sessionId", sessionId, {
+                path: "/",
+                maxAge: 60 * 60 * 24 * 7, // 7 Days
+            });
+        }
+
         await database("transactions").insert({
             id: crypto.randomUUID(),
             title,
             amount: type === "credit" ? amount : amount * -1,
+            session_id: sessionId,
         });
 
         return response.status(201).send();
